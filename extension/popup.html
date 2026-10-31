@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruthGuard</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <div class="logo">🛡️</div>
+            <div>
+                <h1>TruthGuard</h1>
+                <p>Explainable AI Misinformation Detector</p>
+            </div>
+        </div>
+
+        <div class="status" id="statusBar">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Checking backend…</span>
+        </div>
+
+        <div class="actions">
+            <button id="analyzePage" class="btn btn-primary">📄 Analyze Page</button>
+            <button id="checkSelectedText" class="btn btn-secondary">✂️ Check Selected Text</button>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            Select text on a webpage, or click "Analyze Page", to get started.
+        </div>
+
+        <div id="loadingState" class="loading-state hidden">
+            <div class="spinner"></div>
+            <span>Analyzing text…</span>
+        </div>
+
+        <div id="errorState" class="error-state hidden">
+            <strong id="errorTitle">Something went wrong</strong>
+            <p id="errorMessage"></p>
+        </div>
+
+        <div id="result" class="result hidden">
+
+            <div class="result-header">
+                <span id="labelBadge" class="label-badge">-</span>
+                <span id="labelDescription" class="label-description"></span>
+            </div>
+
+            <div id="inputWarning" class="warning-box hidden"></div>
+
+            <div class="confidence-block">
+                <div class="confidence-row">
+                    <span>Model confidence</span>
+                    <strong id="confidenceValue">-</strong>
+                </div>
+                <div class="confidence-bar-track">
+                    <div id="confidenceBarFill" class="confidence-bar-fill"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <button type="button" class="section-toggle" data-target="probSection">
+                    Class probabilities <span class="chevron">▾</span>
+                </button>
+                <div id="probSection" class="section-body">
+                    <div id="probList" class="prob-list"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <button type="button" class="section-toggle" data-target="explainSection">
+                    Why this result? (Explainable AI) <span class="chevron">▾</span>
+                </button>
+                <div id="explainSection" class="section-body">
+                    <p id="explainNote" class="muted-note"></p>
+                    <div class="clue-columns">
+                        <div class="clue-col">
+                            <h3 class="clue-heading positive">Pushed toward this label</h3>
+                            <ul id="positiveClues" class="clue-list"></ul>
+                        </div>
+                        <div class="clue-col">
+                            <h3 class="clue-heading negative">Pushed away from this label</h3>
+                            <ul id="negativeClues" class="clue-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <button type="button" class="section-toggle" data-target="evidenceSection">
+                    Check further (manual search links) <span class="chevron">▾</span>
+                </button>
+                <div id="evidenceSection" class="section-body">
+                    <p class="muted-note">
+                        These are NOT automated fact-checks. They are search shortcuts
+                        you open and read yourself.
+                    </p>
+                    <div id="evidenceList" class="evidence-list"></div>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                ⚠️ <strong>Not a verified fact-check.</strong>
+                <span id="cautionText"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="popup.js"></script>
+
+</body>
+</html>

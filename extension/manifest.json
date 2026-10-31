@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "TruthGuard",
+  "version": "1.1.0",
+  "description": "TruthGuard: an explainable AI browser extension that analyzes text for misinformation risk and shows why, using a local ML backend.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8000/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TruthGuard"
+  }
+}

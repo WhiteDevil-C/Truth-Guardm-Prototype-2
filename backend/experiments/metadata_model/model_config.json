@@ -1,0 +1,42 @@
+{
+  "model": "text_plus_metadata",
+  "C": 1.0,
+  "labels": [
+    "barely-true",
+    "false",
+    "half-true",
+    "mostly-true",
+    "pants-fire",
+    "true"
+  ],
+  "text_features": {
+    "max_features": 30000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "sublinear_tf": true,
+    "min_df": 2
+  },
+  "metadata_features": {
+    "categorical_columns": [
+      "subject",
+      "speaker",
+      "job_title",
+      "state_info",
+      "party_affiliation"
+    ],
+    "numeric_columns": [
+      "barely_true_count",
+      "false_count",
+      "half_true_count",
+      "mostly_true_count",
+      "pants_fire_count"
+    ],
+    "enabled": true
+  },
+  "validation_accuracy": 0.2796,
+  "validation_macro_f1": 0.2885,
+  "test_split_used": false,
+  "production_model_changed": false
+}

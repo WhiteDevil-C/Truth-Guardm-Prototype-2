@@ -1,0 +1,27 @@
+{
+  "selection_rule": "highest validation accuracy, then macro-F1",
+  "results": [
+    {
+      "model": "word_char_tfidf_logistic_regression",
+      "C": 1.0,
+      "validation_samples": 1284,
+      "accuracy": 0.2469,
+      "macro_f1": 0.2468,
+      "weighted_f1": 0.2471,
+      "word_features": 25715,
+      "character_features": 30000
+    },
+    {
+      "model": "word_char_tfidf_logistic_regression",
+      "C": 5.0,
+      "validation_samples": 1284,
+      "accuracy": 0.2531,
+      "macro_f1": 0.2514,
+      "weighted_f1": 0.2533,
+      "word_features": 25715,
+      "character_features": 30000
+    }
+  ],
+  "best_C": 5.0,
+  "test_split_used": false
+}

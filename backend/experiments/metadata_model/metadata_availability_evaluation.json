@@ -1,0 +1,17 @@
+{
+  "validation_samples": 1284,
+  "with_real_dataset_metadata": {
+    "accuracy": 0.2796,
+    "macro_f1": 0.2885,
+    "weighted_f1": 0.2783
+  },
+  "with_unknown_metadata": {
+    "accuracy": 0.25,
+    "macro_f1": 0.2239,
+    "weighted_f1": 0.2307
+  },
+  "accuracy_difference_percentage_points": -2.96,
+  "macro_f1_difference": -0.0646,
+  "test_split_used": false,
+  "production_model_changed": false
+}

@@ -1,0 +1,28 @@
+# Python virtual environment
+backend/venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Environment variables / secrets
+.env
+.env.*
+
+# OS files
+.DS_Store
+
+# Node dependencies (if any tooling is added later)
+node_modules/
+
+# Build files
+dist/
+build/
+
+# LIAR dataset files — fetch locally per README, not redistributed here
+backend/data/
+
+# Local API secrets
+backend/.env

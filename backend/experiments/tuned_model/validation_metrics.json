@@ -1,0 +1,15 @@
+{
+  "validation_samples": 1284,
+  "accuracy": 0.2679,
+  "macro_f1": 0.2676,
+  "weighted_f1": 0.2674,
+  "configuration": {
+    "max_features": 30000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "C": 5.0,
+    "class_weight": "balanced"
+  }
+}

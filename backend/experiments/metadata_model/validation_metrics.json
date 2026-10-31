@@ -1,0 +1,41 @@
+{
+  "selection_rule": "highest validation accuracy, then macro-F1",
+  "results": [
+    {
+      "model": "text_only",
+      "C": 1.0,
+      "validation_samples": 1284,
+      "accuracy": 0.2453,
+      "macro_f1": 0.2465,
+      "weighted_f1": 0.2445
+    },
+    {
+      "model": "text_only",
+      "C": 5.0,
+      "validation_samples": 1284,
+      "accuracy": 0.2679,
+      "macro_f1": 0.2676,
+      "weighted_f1": 0.2674
+    },
+    {
+      "model": "text_plus_metadata",
+      "C": 1.0,
+      "validation_samples": 1284,
+      "accuracy": 0.2796,
+      "macro_f1": 0.2885,
+      "weighted_f1": 0.2783
+    },
+    {
+      "model": "text_plus_metadata",
+      "C": 5.0,
+      "validation_samples": 1284,
+      "accuracy": 0.264,
+      "macro_f1": 0.2722,
+      "weighted_f1": 0.2629
+    }
+  ],
+  "best_model": "text_plus_metadata",
+  "best_C": 1.0,
+  "test_split_used": false,
+  "caution": "Speaker and historical metadata may introduce bias or memorization; this experiment is not a verified fact-checker."
+}

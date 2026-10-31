@@ -1,0 +1,26 @@
+[
+  {
+    "model": "logistic_regression_C5",
+    "accuracy": 0.2648,
+    "macro_f1": 0.2639,
+    "weighted_f1": 0.2647
+  },
+  {
+    "model": "linear_svc",
+    "accuracy": 0.2484,
+    "macro_f1": 0.247,
+    "weighted_f1": 0.2483
+  },
+  {
+    "model": "logistic_regression_C1",
+    "accuracy": 0.2407,
+    "macro_f1": 0.2426,
+    "weighted_f1": 0.2395
+  },
+  {
+    "model": "multinomial_nb",
+    "accuracy": 0.2453,
+    "macro_f1": 0.2358,
+    "weighted_f1": 0.2419
+  }
+]

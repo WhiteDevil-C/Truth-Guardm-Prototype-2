@@ -1,0 +1,146 @@
+[
+  {
+    "max_features": 30000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "C": 5.0,
+    "accuracy": 0.2679,
+    "macro_f1": 0.2676,
+    "weighted_f1": 0.2674,
+    "vocabulary_size": 25715
+  },
+  {
+    "max_features": 50000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "C": 5.0,
+    "accuracy": 0.2679,
+    "macro_f1": 0.2676,
+    "weighted_f1": 0.2674,
+    "vocabulary_size": 25715
+  },
+  {
+    "max_features": 30000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "C": 10.0,
+    "accuracy": 0.2664,
+    "macro_f1": 0.2657,
+    "weighted_f1": 0.2657,
+    "vocabulary_size": 25715
+  },
+  {
+    "max_features": 50000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "C": 10.0,
+    "accuracy": 0.2664,
+    "macro_f1": 0.2657,
+    "weighted_f1": 0.2657,
+    "vocabulary_size": 25715
+  },
+  {
+    "max_features": 20000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "C": 5.0,
+    "accuracy": 0.2648,
+    "macro_f1": 0.2639,
+    "weighted_f1": 0.2647,
+    "vocabulary_size": 20000
+  },
+  {
+    "max_features": 30000,
+    "ngram_range": [
+      1,
+      3
+    ],
+    "C": 10.0,
+    "accuracy": 0.2632,
+    "macro_f1": 0.2638,
+    "weighted_f1": 0.2629,
+    "vocabulary_size": 30000
+  },
+  {
+    "max_features": 50000,
+    "ngram_range": [
+      1,
+      3
+    ],
+    "C": 10.0,
+    "accuracy": 0.264,
+    "macro_f1": 0.2628,
+    "weighted_f1": 0.2637,
+    "vocabulary_size": 36891
+  },
+  {
+    "max_features": 30000,
+    "ngram_range": [
+      1,
+      3
+    ],
+    "C": 5.0,
+    "accuracy": 0.2617,
+    "macro_f1": 0.2623,
+    "weighted_f1": 0.2611,
+    "vocabulary_size": 30000
+  },
+  {
+    "max_features": 50000,
+    "ngram_range": [
+      1,
+      3
+    ],
+    "C": 5.0,
+    "accuracy": 0.2609,
+    "macro_f1": 0.2594,
+    "weighted_f1": 0.2606,
+    "vocabulary_size": 36891
+  },
+  {
+    "max_features": 20000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "C": 10.0,
+    "accuracy": 0.2601,
+    "macro_f1": 0.2585,
+    "weighted_f1": 0.2597,
+    "vocabulary_size": 20000
+  },
+  {
+    "max_features": 20000,
+    "ngram_range": [
+      1,
+      3
+    ],
+    "C": 5.0,
+    "accuracy": 0.2539,
+    "macro_f1": 0.2546,
+    "weighted_f1": 0.2534,
+    "vocabulary_size": 20000
+  },
+  {
+    "max_features": 20000,
+    "ngram_range": [
+      1,
+      3
+    ],
+    "C": 10.0,
+    "accuracy": 0.2508,
+    "macro_f1": 0.2513,
+    "weighted_f1": 0.2504,
+    "vocabulary_size": 20000
+  }
+]
