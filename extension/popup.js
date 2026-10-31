@@ -90,15 +90,27 @@ async function getTextFromTab(mode) {
         throw new Error("No active tab found.");
     }
 
+    // Retrieve the selection saved by content.js before the popup opened.
+    if (mode === "selected") {
+        const saved = await chrome.storage.local.get("truthguardSelection");
+        const selection = saved.truthguardSelection;
+
+        if (!selection || !selection.text) {
+            throw new Error("No saved text selection found. Select text on the webpage first.");
+        }
+
+        // Prevent using a selection saved from another webpage.
+        if (selection.url !== tab.url) {
+            throw new Error("The saved selection belongs to another webpage. Select the text again.");
+        }
+
+        return selection.text;
+    }
+
+    // Existing page extraction logic.
     const results = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        args: [mode],
-        func: (mode) => {
-            // Preserve the user's exact text selection.
-            if (mode === "selected") {
-                return window.getSelection().toString();
-            }
-
+        func: () => {
             // Avoid treating the Google News homepage as one article.
             if (
                 location.hostname === "news.google.com" &&
@@ -129,12 +141,10 @@ async function getTextFromTab(mode) {
                 .map(paragraph => paragraph.innerText.trim())
                 .filter(text => text.length > 0);
 
-            // Prefer paragraph-based extraction when available.
             if (paragraphs.length > 0) {
                 return paragraphs.join("\n\n");
             }
 
-            // Fallback for websites without paragraph elements.
             return content.innerText || content.textContent || "";
         }
     });
