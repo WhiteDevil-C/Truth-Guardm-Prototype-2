@@ -26,3 +26,6 @@ backend/data/
 
 # Local API secrets
 backend/.env
+
+# Local experimental RoBERTa model (large files)
+backend/experiments/roberta_candidate/model/
