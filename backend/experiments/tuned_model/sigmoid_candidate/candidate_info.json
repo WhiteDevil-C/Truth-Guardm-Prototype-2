@@ -1,0 +1,11 @@
+{
+  "model": "tuned_word_tfidf_logistic_regression_sigmoid",
+  "calibration": "sigmoid",
+  "calibration_cv": 3,
+  "ensemble": false,
+  "C": 5.0,
+  "class_weight": "balanced",
+  "training_samples": 10269,
+  "test_split_used": false,
+  "production_model_modified": false
+}

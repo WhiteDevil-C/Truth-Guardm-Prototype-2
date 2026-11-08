@@ -1,0 +1,51 @@
+{
+  "experiment": "tuned_word_only_tfidf_calibration",
+  "configuration": {
+    "max_features": 30000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "sublinear_tf": true,
+    "min_df": 2,
+    "logistic_regression_C": 5.0,
+    "class_weight": "balanced",
+    "calibration_cv": 3,
+    "calibration_ensemble": false
+  },
+  "training_samples": 10269,
+  "validation_samples": 1284,
+  "test_split_used": false,
+  "results": [
+    {
+      "model": "uncalibrated",
+      "validation_samples": 1284,
+      "accuracy": 0.2679,
+      "macro_f1": 0.2676,
+      "weighted_f1": 0.2674,
+      "log_loss": 1.8184,
+      "multiclass_brier_score": 0.8545,
+      "top_label_ece": 0.1397
+    },
+    {
+      "model": "sigmoid",
+      "validation_samples": 1284,
+      "accuracy": 0.2679,
+      "macro_f1": 0.2465,
+      "weighted_f1": 0.2475,
+      "log_loss": 1.7003,
+      "multiclass_brier_score": 0.8067,
+      "top_label_ece": 0.0212
+    },
+    {
+      "model": "isotonic",
+      "validation_samples": 1284,
+      "accuracy": 0.2679,
+      "macro_f1": 0.2489,
+      "weighted_f1": 0.2496,
+      "log_loss": 1.7228,
+      "multiclass_brier_score": 0.8063,
+      "top_label_ece": 0.0271
+    }
+  ]
+}

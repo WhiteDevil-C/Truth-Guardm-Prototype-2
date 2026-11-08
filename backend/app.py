@@ -15,18 +15,21 @@ from pydantic import BaseModel, Field
 # Model loading
 # --------------------------------------------------------------------------- #
 
-MODEL_DIR = Path(__file__).resolve().parent / "model"
-VECTORIZER_PATH = MODEL_DIR / "vectorizer.pkl"
-CLASSIFIER_PATH = MODEL_DIR / "classifier.pkl"
-LABELS_PATH = MODEL_DIR / "labels.json"
+BACKEND_DIR = Path(__file__).resolve().parent
+PRODUCTION_MODEL_DIR = BACKEND_DIR / "model"
+SIGMOID_MODEL_DIR = (
+    BACKEND_DIR / "experiments" / "tuned_model" / "sigmoid_candidate"
+)
 
-TOP_K_CLUES = 8  # how many positive / negative clues to return
+MODEL_MODE = os.getenv("TRUTHGUARD_MODEL", "production").strip().lower()
 
-app = FastAPI(title="TruthGuard API", version="1.3.0")
+if MODEL_MODE not in {"production", "sigmoid"}:
+    raise ValueError("TRUTHGUARD_MODEL must be 'production' or 'sigmoid'.")
 
-# The browser extension calls this API from a chrome-extension:// origin,
-# which is why permissive CORS is needed for local development.
-# Tighten this before any public deployment.
+TOP_K_CLUES = 8
+
+app = FastAPI(title="TruthGuard API", version="1.4.0")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -36,20 +39,43 @@ app.add_middleware(
 
 vectorizer = None
 classifier = None
+xai_classifier = None
 labels = []
 model_error = None
 
 try:
-    vectorizer = joblib.load(VECTORIZER_PATH)
-    classifier = joblib.load(CLASSIFIER_PATH)
-    with open(LABELS_PATH, "r", encoding="utf-8") as fh:
-        labels = json.load(fh)
-except Exception as exc:  # noqa: BLE001 - report any load failure to the client
-    model_error = f"{type(exc).__name__}: {exc}"
+    if MODEL_MODE == "sigmoid":
+        selected_dir = SIGMOID_MODEL_DIR
+        classifier_path = selected_dir / "calibrated_classifier.pkl"
+        xai_path = selected_dir / "xai_classifier.pkl"
+    else:
+        selected_dir = PRODUCTION_MODEL_DIR
+        classifier_path = selected_dir / "classifier.pkl"
+        xai_path = classifier_path
 
-# The classifier stores classes in its own order; that order defines the rows
-# of classifier.coef_. Use it so index alignment in the explanation is exact.
-MODEL_CLASSES = [str(c) for c in classifier.classes_] if classifier is not None else []
+    vectorizer = joblib.load(selected_dir / "vectorizer.pkl")
+    classifier = joblib.load(classifier_path)
+    xai_classifier = joblib.load(xai_path)
+
+    with open(selected_dir / "labels.json", "r", encoding="utf-8") as fh:
+        labels = json.load(fh)
+
+    MODEL_CLASSES = [str(c) for c in classifier.classes_]
+
+    if MODEL_CLASSES != [str(c) for c in xai_classifier.classes_]:
+        raise ValueError("Prediction and XAI model class ordering does not match.")
+
+    if not hasattr(xai_classifier, "coef_"):
+        raise ValueError("XAI classifier does not expose linear coefficients.")
+
+except Exception as exc:
+    model_error = f"{type(exc).__name__}: {exc}"
+    vectorizer = None
+    classifier = None
+    xai_classifier = None
+    labels = []
+    MODEL_CLASSES = []
+
 
 # Human-readable descriptions shown by the extension next to the raw label.
 # These are plain-language glosses of the original LIAR annotation scheme,
@@ -104,7 +130,7 @@ def build_explanation(text: str, class_index: int, top_k: int = TOP_K_CLUES) -> 
     valid for this linear model; if the model is ever replaced with a
     non-linear one, this function must be replaced too.
     """
-    if vectorizer is None or classifier is None:
+    if vectorizer is None or classifier is None or xai_classifier is None:
         return {
             "available": False,
             "positive_clues": [],
@@ -134,7 +160,7 @@ def build_explanation(text: str, class_index: int, top_k: int = TOP_K_CLUES) -> 
         }
 
     vocabulary = vectorizer.get_feature_names_out()
-    coefficients = classifier.coef_[class_index]
+    coefficients = xai_classifier.coef_[class_index]
 
     contributions = []
     for feature_index, tfidf_value in zip(matrix.indices, matrix.data):
