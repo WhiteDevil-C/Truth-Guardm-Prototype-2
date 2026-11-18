@@ -35,6 +35,7 @@ const cautionText = document.getElementById("cautionText");
 
 const analyzePageBtn = document.getElementById("analyzePage");
 const checkSelectedTextBtn = document.getElementById("checkSelectedText");
+const openDetailedBtn = document.getElementById("openDetailed");
 
 // --- View state helpers ------------------------------------------------- --
 
@@ -316,6 +317,18 @@ async function loadEvidence(text) {
         if (!response.ok) throw new Error("Evidence request failed");
 
         const data = await response.json();
+
+        const saved = await chrome.storage.local.get("truthguardDetailedResult");
+        if (saved.truthguardDetailedResult) {
+            await chrome.storage.local.set({
+                truthguardDetailedResult: {
+                    ...saved.truthguardDetailedResult,
+                    evidence: data,
+                    evidenceStatus: "complete"
+                }
+            });
+        }
+
         evidenceList.innerHTML = "";
 
         const heading = document.createElement("h3");
@@ -459,6 +472,17 @@ async function loadEvidence(text) {
         }
     } catch (error) {
         console.error("TruthGuard evidence lookup failed:", error);
+
+        const saved = await chrome.storage.local.get("truthguardDetailedResult");
+        if (saved.truthguardDetailedResult) {
+            await chrome.storage.local.set({
+                truthguardDetailedResult: {
+                    ...saved.truthguardDetailedResult,
+                    evidenceStatus: "unavailable"
+                }
+            });
+        }
+
         evidenceList.innerHTML =
             '<p class="muted-note">Could not load evidence. Check that the TruthGuard backend is running.</p>';
     }
@@ -543,9 +567,24 @@ async function analyze(mode) {
         }
 
         const data = await response.json();
+
+        // Preserve the completed analysis for the separate Detailed page.
+        await chrome.storage.local.set({
+            truthguardDetailedResult: {
+                text,
+                analysis: data,
+                evidence: null,
+                evidenceStatus: "pending",
+                savedAt: Date.now()
+            }
+        });
+
+        openDetailedBtn.disabled = false;
         renderResult(data);
         openDefaultSections();
+
         loadEvidence(text);
+
         refreshBackendStatus();
     } catch (error) {
         console.error(error);
@@ -561,6 +600,19 @@ async function analyze(mode) {
 
 analyzePageBtn.addEventListener("click", () => analyze("page"));
 checkSelectedTextBtn.addEventListener("click", () => analyze("selected"));
+
+openDetailedBtn.addEventListener("click", async () => {
+    const saved = await chrome.storage.local.get("truthguardDetailedResult");
+
+    if (!saved.truthguardDetailedResult) {
+        alert("Please analyze a webpage or selected text first.");
+        return;
+    }
+
+    await chrome.tabs.create({
+        url: chrome.runtime.getURL("detailed.html")
+    });
+});
 
 // Initial state
 showView("empty");

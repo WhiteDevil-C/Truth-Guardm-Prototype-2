@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruthGuard - Detailed Analysis</title>
+    <link rel="stylesheet" href="detailed.css">
+</head>
+<body>
+    <main class="page">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">TRUTHGUARD</p>
+                <h1>Detailed Analysis Report</h1>
+                <p class="subtitle">Explainable AI misinformation analysis</p>
+            </div>
+            <button id="refreshBtn" class="refresh-btn">Refresh report</button>
+        </header>
+
+        <section id="loading" class="panel">Loading your analysis...</section>
+        <section id="error" class="panel hidden"></section>
+
+        <div id="report" class="hidden">
+            <section class="panel">
+                <h2>Original analyzed text</h2>
+                <p id="originalText" class="original-text"></p>
+            </section>
+
+            <section class="panel">
+                <h2>Prediction summary</h2>
+                <div class="summary-grid">
+                    <div>
+                        <p class="field-label">Predicted label</p>
+                        <p id="predictionLabel" class="prediction-label">—</p>
+                    </div>
+                    <div>
+                        <p class="field-label">Model confidence</p>
+                        <p id="confidenceValue" class="big-value">—</p>
+                    </div>
+                </div>
+                <p id="labelDescription" class="muted"></p>
+                <div id="warning" class="warning hidden"></div>
+                <div id="caution" class="muted"></div>
+            </section>
+
+            <section class="panel">
+                <h2>Class probability distribution</h2>
+                <p class="muted">These values represent the model's output scores, not verified probabilities that a claim is true or false.</p>
+                <div id="probabilities"></div>
+            </section>
+
+            <section class="panel">
+                <h2>Explainable AI (XAI)</h2>
+                <p id="explainNote" class="muted"></p>
+                <div class="clue-grid">
+                    <div>
+                        <h3>Positive contributing clues</h3>
+                        <div id="positiveClues"></div>
+                    </div>
+                    <div>
+                        <h3>Negative contributing clues</h3>
+                        <div id="negativeClues"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>Published fact-check evidence</h2>
+                <p class="muted">External reviews are related references, not automatic proof that the analyzed text has the same context.</p>
+                <div id="evidenceStatus" class="muted">Evidence lookup is pending...</div>
+                <div id="factChecks"></div>
+                <div id="manualSources"></div>
+            </section>
+
+            <footer>TruthGuard assists with misinformation analysis. Always verify important claims using reliable original sources.</footer>
+        </div>
+    </main>
+    <script src="detailed.js"></script>
+</body>
+</html>
